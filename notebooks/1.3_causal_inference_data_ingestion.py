@@ -23,11 +23,12 @@ import random
 from datetime import datetime
 from pathlib import Path
 
-from causal_inference_curator.config import get_env, load_config
 from loguru import logger
+from pypdf import PdfReader
 from pyspark.sql import SparkSession
 from pyspark.sql.types import LongType, StringType, StructField, StructType
-from pypdf import PdfReader
+
+from causal_inference_curator.config import get_env, load_config
 
 # COMMAND ----------
 # Create Spark session
@@ -122,7 +123,8 @@ def fetch_pdf_metadata(pdf_dir: str = "../") -> list[dict]:
 # Fetch PDF metadata
 
 logger.info("Extracting PDF metadata...")
-papers = fetch_pdf_metadata("/Workspace/Shared/causal_inference_pdfs")
+volume_path = f"/Volumes/{CATALOG}/{SCHEMA}/{cfg.project.volume}"
+papers = fetch_pdf_metadata(volume_path)
 logger.info(f"Extracted metadata from {len(papers)} PDFs")
 
 # COMMAND ----------

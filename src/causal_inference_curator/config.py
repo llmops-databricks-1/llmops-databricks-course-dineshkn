@@ -104,9 +104,7 @@ class Config(BaseModel):
     chunking: ChunkingConfig = Field(default_factory=ChunkingConfig)
 
 
-def load_config(
-    config_path: str = "project_config.yml", env: str = "dev"
-) -> Config:
+def load_config(config_path: str = "project_config.yml", env: str = "dev") -> Config:
     """Load project configuration.
 
     Args:

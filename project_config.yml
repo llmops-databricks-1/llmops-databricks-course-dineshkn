@@ -2,19 +2,19 @@
 
 # Development environment
 dev:
-  catalog: llmops_dev
-  schema: causal_inference
+  catalog: mlops_dev
+  schema: dineshka
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-1-70b-instruct  # TODO: create/verify later
   embedding_endpoint: databricks-gte-large-en  # TODO: create/verify later
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID  #TODO
   vector_search_endpoint: llmops_course_vs_endpoint  # TODO: create later
-  genie_space_id: null  # TODO: create later 
+  genie_space_id: null  # TODO: create later
 
 # Acceptance/Staging environment
 acc:
-  catalog: llmops_dev
-  schema: causal_inference
+  catalog: mlops_dev
+  schema: dineshka
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-1-70b-instruct
   embedding_endpoint: databricks-gte-large-en

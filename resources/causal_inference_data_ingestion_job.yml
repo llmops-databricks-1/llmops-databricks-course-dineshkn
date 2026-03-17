@@ -8,9 +8,9 @@ resources:
       environments:
         - environment_key: default
           spec:
-            environment_version: "4"
+            client: "1"
             dependencies:
-              - ../dist/*.whl
+              - /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
 
       tasks:
         - task_key: data_ingestion

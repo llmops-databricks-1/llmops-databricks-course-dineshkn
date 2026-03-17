@@ -15,6 +15,7 @@ repos:
       - id: detect-private-key
       - id: forbid-new-submodules
       - id: check-docstring-first
+        exclude: ^notebooks/
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.1
     hooks:

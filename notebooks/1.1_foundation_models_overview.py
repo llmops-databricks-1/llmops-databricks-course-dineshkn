@@ -164,9 +164,7 @@ logger.info(f"For {input_tokens + output_tokens:,} tokens in 24h:")
 logger.info(f"API cost (Llama 3.3 70B): {api_cost_equivalent:.2f} DBUs")
 logger.info(f"Provisioned cost (Llama 3.2 1B): {provisioned_cost:.2f} DBUs")
 logger.info(f"Difference: {api_cost_equivalent - provisioned_cost:.2f} DBUs")
-logger.info(
-    "Provisioned throughput becomes cost-effective at high, predictable volumes"
-)
+logger.info("Provisioned throughput becomes cost-effective at high, predictable volumes")
 
 # COMMAND ----------
 
