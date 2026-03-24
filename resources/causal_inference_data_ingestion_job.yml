@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    causal_inference_data_ingestion_job:
+      name: causal_inference_data_ingestion
+      tags:
+        project_name: "causal-inference-curator"
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
+
+      tasks:
+        - task_key: data_ingestion
+          environment_key: default
+          notebook_task:
+            notebook_path: ../notebooks/1.3_causal_inference_data_ingestion.py
+            base_parameters:
+              env: ${bundle.target}
+              git_sha: "${var.git_sha}"
+              run_id: "{{job.run_id}}"

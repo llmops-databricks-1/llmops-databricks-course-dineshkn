@@ -1,7 +1,7 @@
 [project]
-name = "llmops-databricks-course-dineshkn"
+name = "causal-inference-curator"
 dynamic = ["version"]
-description = "llmops-databricks-course-dineshkn - LLMOps Course on Databricks"
+description = "Causal Inference Knowledge Base - LLMOps Course on Databricks"
 requires-python = ">=3.12, <3.13"
 dependencies = [
     "cffi==1.17.1",
@@ -23,7 +23,9 @@ dependencies = [
     "databricks-agents==1.8.2",
     "psycopg==3.3.2",
     "psycopg-pool==3.3.0",
-    "psycopg[binary]==3.3.2"
+    "psycopg[binary]==3.3.2",
+    "pypdf==5.1.0",
+    "pyyaml==6.0.2"
 ]
 
 [project.optional-dependencies]
@@ -40,7 +42,7 @@ ci = ["pre-commit>=4.1.0, <5",
 include-package-data = true
 
 [tool.setuptools.package-data]
-"your_custom_package" = ["../../../project_config.yml"]
+"causal_inference_curator" = ["../../../project_config.yml"]
 
 [build-system]
 requires = ["setuptools>=72.0"]
@@ -48,7 +50,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["your_custom_package*"]
+include = ["causal_inference_curator*"]
 
 [tool.setuptools.dynamic]
 version = { file = "version.txt" }
@@ -61,6 +63,7 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 90
 
+[tool.ruff.lint]
 select = [
     "F",    # pyflakes rules
     "E",    # pycodestyle error rules
@@ -80,9 +83,15 @@ ignore = [
     "D213",   # multi-line-summary-second-line
     "C901",   # too complex
     "ERA001", # commented out code
-    "ANN204",
-    "ANN102",
-    "ANN101"
+    "ANN204"  # Missing return type annotation for special method
+]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.py" = [
+    "E402",   # module-level imports not at top (expected in notebook cells)
+    "E501",   # line too long (markdown cells in notebooks)
+    "F821",   # undefined name (e.g. `display` is a Databricks magic)
+    "ANN",    # type annotations not required in notebook functions
 ]
 
 [tool.ruff.format]
