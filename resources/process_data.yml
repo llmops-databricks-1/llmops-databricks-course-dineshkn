@@ -1,0 +1,25 @@
+resources:
+  jobs:
+    causal-inference-data-pipeline:
+      name: causal-inference-data-pipeline
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"
+        timezone_id: "Europe/Amsterdam"
+        pause_status: PAUSED
+      tags:
+        project_name: "causal-inference-curator"
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
+
+      tasks:
+        - task_key: preprocessing
+          environment_key: default
+          notebook_task:
+            notebook_path: deployment_scripts/process_data.py
+            base_parameters:
+              env: ${bundle.target}
