@@ -78,6 +78,7 @@ from loguru import logger
 
 # COMMAND ----------
 
+
 # Example: Token estimation
 def estimate_tokens(text: str) -> int:
     """Rough estimation: ~4 characters per token."""
@@ -86,8 +87,7 @@ def estimate_tokens(text: str) -> int:
 
 short_text = "What is an instrumental variable?"
 long_text = (
-    "Instrumental variables are used in causal inference to address endogeneity. "
-    * 100
+    "Instrumental variables are used in causal inference to address endogeneity. " * 100
 )
 
 logger.info(f"Short text: {estimate_tokens(short_text)} tokens")
@@ -98,7 +98,9 @@ system_prompt_tokens = 200
 user_query_tokens = 100
 max_output_tokens = 2000
 
-available_for_context = context_window - system_prompt_tokens - user_query_tokens - max_output_tokens
+available_for_context = (
+    context_window - system_prompt_tokens - user_query_tokens - max_output_tokens
+)
 logger.info(f"\nAvailable tokens for context: {available_for_context:,}")
 logger.info(f"Approximate words: {available_for_context * 0.75:,.0f}")
 

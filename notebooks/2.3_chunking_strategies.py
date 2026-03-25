@@ -129,9 +129,7 @@ logger.info(f"  Max length:      {chunk_stats['max_length']} characters")
 
 # Show chunk distribution by chapter
 logger.info("Chunks by chapter:")
-chunks_df.groupBy("chapter_num", "title").count().orderBy("chapter_num").show(
-    truncate=60
-)
+chunks_df.groupBy("chapter_num", "title").count().orderBy("chapter_num").show(truncate=60)
 
 # COMMAND ----------
 

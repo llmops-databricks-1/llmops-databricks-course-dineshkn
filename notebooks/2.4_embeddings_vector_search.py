@@ -229,7 +229,9 @@ logger.info("Top 5 Results:")
 logger.info("=" * 80)
 
 for i, row in enumerate(parse_vector_search_results(results), 1):
-    logger.info(f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}")
+    logger.info(
+        f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}"
+    )
     logger.info(f"   Chunk ID: {row.get('id', 'N/A')}")
     logger.info(f"   Text preview: {row.get('text', '')[:200]}...")
 
@@ -258,7 +260,9 @@ logger.info("Results:")
 logger.info("=" * 80)
 
 for i, row in enumerate(parse_vector_search_results(results), 1):
-    logger.info(f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}")
+    logger.info(
+        f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}"
+    )
     logger.info(f"   Text: {row.get('text', '')[:150]}...")
 
 # COMMAND ----------
@@ -317,7 +321,9 @@ logger.info("Results:")
 logger.info("=" * 80)
 
 for i, row in enumerate(parse_vector_search_results(results), 1):
-    logger.info(f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}")
+    logger.info(
+        f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}"
+    )
     logger.info(f"   Text: {row.get('text', '')[:200]}...")
 
 # COMMAND ----------
@@ -362,7 +368,9 @@ logger.info("Results:")
 logger.info("=" * 80)
 
 for i, row in enumerate(parse_vector_search_results(results), 1):
-    logger.info(f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}")
+    logger.info(
+        f"\n{i}. Chapter {row.get('chapter_num', 'N/A')}: {row.get('title', 'N/A')}"
+    )
     logger.info(f"   Text: {row.get('text', '')[:200]}...")
 
 # COMMAND ----------
@@ -386,7 +394,9 @@ results_basic = index.similarity_search(
 logger.info("Strategy 1: Basic Semantic Search")
 logger.info("-" * 80)
 for i, row in enumerate(parse_vector_search_results(results_basic), 1):
-    logger.info(f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}...")
+    logger.info(
+        f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}..."
+    )
 
 # Strategy 2: Hybrid search
 results_hybrid = index.similarity_search(
@@ -399,7 +409,9 @@ results_hybrid = index.similarity_search(
 logger.info("\nStrategy 2: Hybrid Search")
 logger.info("-" * 80)
 for i, row in enumerate(parse_vector_search_results(results_hybrid), 1):
-    logger.info(f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}...")
+    logger.info(
+        f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}..."
+    )
 
 # Strategy 3: Hybrid + Reranking
 results_reranked = index.similarity_search(
@@ -413,7 +425,9 @@ results_reranked = index.similarity_search(
 logger.info("\nStrategy 3: Hybrid + Reranking")
 logger.info("-" * 80)
 for i, row in enumerate(parse_vector_search_results(results_reranked), 1):
-    logger.info(f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}...")
+    logger.info(
+        f"{i}. Ch{row.get('chapter_num', '?')}: {row.get('title', 'N/A')[:60]}..."
+    )
 
 # COMMAND ----------
 

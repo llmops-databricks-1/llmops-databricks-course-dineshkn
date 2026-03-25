@@ -111,10 +111,12 @@ class DataProcessor:
     def _process_chunks(self) -> None:
         """Extract, clean, and join chunks; write to causal_inference_chunks."""
         chunk_schema = T.ArrayType(
-            T.StructType([
-                T.StructField("chunk_id", T.StringType(), True),
-                T.StructField("content", T.StringType(), True),
-            ])
+            T.StructType(
+                [
+                    T.StructField("chunk_id", T.StringType(), True),
+                    T.StructField("content", T.StringType(), True),
+                ]
+            )
         )
         extract_udf = udf(self._extract_chunks, chunk_schema)
         clean_udf = udf(self._clean_text, T.StringType())
@@ -141,8 +143,7 @@ class DataProcessor:
         )
 
         chunks_df = (
-            parsed_df
-            .withColumn("paper_id", filename_stem)
+            parsed_df.withColumn("paper_id", filename_stem)
             .withColumn("chunks", extract_udf(col("parsed_content")))
             .withColumn("chunk", explode(col("chunks")))
             .select(
@@ -218,9 +219,7 @@ class DataProcessor:
         logger.info("Starting PDF processing pipeline")
 
         unprocessed = (
-            self.spark.table(self.papers_table)
-            .filter("processed IS NULL")
-            .count()
+            self.spark.table(self.papers_table).filter("processed IS NULL").count()
         )
         logger.info(f"Found {unprocessed} unprocessed papers")
 
