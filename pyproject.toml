@@ -6,7 +6,7 @@ requires-python = ">=3.12, <3.13"
 dependencies = [
     "cffi==1.17.1",
     "cloudpickle==3.1.1",
-    "numpy==2.4.0",
+    "numpy==2.2.6",
     "pandas==2.3.0",
     "pyarrow==22.0.0",
     "databricks-sdk==0.85.0",
@@ -19,7 +19,6 @@ dependencies = [
     "backoff==2.2.1",
     "mlflow==3.8.1",
     "nest-asyncio==1.6.0",
-    "arxiv==2.3.1",
     "databricks-agents==1.8.2",
     "psycopg==3.3.2",
     "psycopg-pool==3.3.0",
