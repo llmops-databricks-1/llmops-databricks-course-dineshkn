@@ -64,6 +64,49 @@
 - Profile name in `~/.databrickscfg`: `llm-ops-course-dink`
 - Always pass `--profile llm-ops-course-dink` to `databricks` CLI commands (two profiles matched the new host, causing ambiguity).
 
+## Week 2: Context Engineering & Vector Search
+
+### What We Built
+
+- **PDF parsing pipeline** (`data_processor.py`): reads causal inference PDFs from the UC Volume, parses them with `ai_parse_document` via SQL, filters out figures/tables, and writes clean text chunks to `causal_inference_chunks` (CDF enabled)
+- **Vector search** (`vector_search.py`): creates a delta-sync index on `llmops_course_vs_endpoint` using `databricks-gte-large-en`; `sync_index()` handles incremental updates when new PDFs are added
+- **DAB job** (`resources/process_data.yml` + `resources/deployment_scripts/process_data.py`): production pipeline that runs `DataProcessor.process_and_save()` then `sync_index()` — add a new PDF to the volume, run the job, knowledge base is updated
+- **Notebooks 2.1–2.4**: interactive exploration of context engineering theory, PDF parsing, chunking strategies, and embeddings/vector search (semantic, filtered, hybrid, reranked)
+
+### Key Decisions
+
+- `ai_parse_document` is called via SQL `INSERT INTO ... SELECT` (not PySpark `F.expr`) — returns a JSON string that we parse with a Python UDF
+- `element_type` is used to filter chunks during processing but is **not stored** in the chunks table
+- Index type is `TRIGGERED` (not `CONTINUOUS`) — sync must be triggered manually or via the DAB job
+- Used the shared `llmops_course_vs_endpoint` (created by course instructor); the index `mlops_dev.dineshka.causal_inference_chunks_index` is ours
+
+### Dependency Fixes
+
+- `numpy==2.4.0` does not exist on PyPI — fixed to `numpy==2.2.6`
+- `arxiv==2.3.1` was a leftover from the reference project — removed
+
+### Notebook Magic Cell Format
+
+- Bare `%pip install` is invalid Python syntax — must use `# MAGIC %pip install ...` followed by `# MAGIC %restart_python`
+- `%restart_python` is Databricks-only — notebooks with this cell cannot run fully outside Databricks (though the non-magic cells work fine locally via the VS Code extension)
+
+### Serverless v4
+
+- Switched to Serverless Runtime v4 (Python 3.12) in VS Code Databricks extension settings — aligns with `requires-python = ">=3.12"` and resolved library install issues
+
+### Branch Strategy
+
+- `week2` branch contains all week 2 work; PR open for review
+- `week3` was branched off `week2` (not `main`) so it includes all week 2 changes and we can build on top without waiting for the PR to merge
+- Same approach going forward: branch each week off the previous week's branch
+
+### Week 3 Approach
+
+- Instructor reference notebooks (starting with `3`) will be added to the `llm_ops_reference` folder as usual
+- We adapt from the reference to our causal inference use case, same as week 1 and week 2
+
+---
+
 ### Git / SSH
 
 - `~/.ssh/config` routes all `github.com` connections to the Adobe key (`id_ed25519_orgb`) via `IdentitiesOnly yes`. This breaks pushes/pulls for the personal llmops org.
