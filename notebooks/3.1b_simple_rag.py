@@ -260,7 +260,9 @@ class SimpleRAG:
         self._w = WorkspaceClient()
         self._vsc = VectorSearchClient(
             workspace_url=self._w.config.host,
-            personal_access_token=self._w.config.authenticate()["Authorization"].split(" ")[1],
+            personal_access_token=self._w.config.authenticate()["Authorization"].split(
+                " "
+            )[1],
             disable_notice=True,
         )
 

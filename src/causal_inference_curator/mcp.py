@@ -45,9 +45,7 @@ def create_managed_exec_fn(
     return exec_fn
 
 
-async def create_mcp_tools(
-    w: WorkspaceClient, url_list: list[str]
-) -> list[ToolInfo]:
+async def create_mcp_tools(w: WorkspaceClient, url_list: list[str]) -> list[ToolInfo]:
     """Create ToolInfo objects from MCP servers.
 
     Args:
@@ -72,7 +70,5 @@ async def create_mcp_tools(
                 },
             }
             exec_fn = create_managed_exec_fn(server_url, mcp_tool.name, w)
-            tools.append(
-                ToolInfo(name=mcp_tool.name, spec=tool_spec, exec_fn=exec_fn)
-            )
+            tools.append(ToolInfo(name=mcp_tool.name, spec=tool_spec, exec_fn=exec_fn))
     return tools

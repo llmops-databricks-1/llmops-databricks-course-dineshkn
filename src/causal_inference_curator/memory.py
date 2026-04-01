@@ -94,9 +94,7 @@ class LakebaseMemory:
             logger.warning(f"Failed to load session messages: {e}")
             return []
 
-    def save_messages(
-        self, session_id: str, messages: list[dict[str, Any]]
-    ) -> None:
+    def save_messages(self, session_id: str, messages: list[dict[str, Any]]) -> None:
         """Append new messages to a session (does not replace existing)."""
         try:
             with self._get_pool().connection() as conn:

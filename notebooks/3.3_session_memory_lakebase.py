@@ -55,9 +55,7 @@ try:
             database_instance=DatabaseInstance(name=INSTANCE_NAME, stopped=False),
             update_mask="stopped",
         )
-        instance = w.database.wait_get_database_instance_database_available(
-            INSTANCE_NAME
-        )
+        instance = w.database.wait_get_database_instance_database_available(INSTANCE_NAME)
 except Exception:
     logger.info(f"Creating new instance: {INSTANCE_NAME}")
     db_instance = DatabaseInstance(name=INSTANCE_NAME, capacity="CU_1")
@@ -129,9 +127,7 @@ memory.save_messages(
         }
     ],
 )
-memory.save_messages(
-    conversation_id, [{"role": "user", "content": "What is LATE?"}]
-)
+memory.save_messages(conversation_id, [{"role": "user", "content": "What is LATE?"}])
 
 full_conv = memory.load_messages(conversation_id)
 logger.info(f"✓ Full conversation ({len(full_conv)} messages):")
@@ -151,9 +147,7 @@ client = OpenAI(
 )
 
 
-def chat_with_memory(
-    session_id: str, user_message: str, memory: LakebaseMemory
-) -> str:
+def chat_with_memory(session_id: str, user_message: str, memory: LakebaseMemory) -> str:
     """Chat with LLM using persisted session history."""
     previous = memory.load_messages(session_id)
 
@@ -186,9 +180,7 @@ logger.info("✓ chat_with_memory ready")
 
 agent_session = f"agent-session-{uuid4()}"
 
-r1 = chat_with_memory(
-    agent_session, "What is regression discontinuity design?", memory
-)
+r1 = chat_with_memory(agent_session, "What is regression discontinuity design?", memory)
 logger.info(f"Response 1: {r1[:200]}...")
 
 # COMMAND ----------
@@ -202,9 +194,5 @@ logger.info(f"Response 2: {r2[:200]}...")
 full = memory.load_messages(agent_session)
 logger.info(f"✓ Full conversation ({len(full)} messages):")
 for i, msg in enumerate(full, 1):
-    content = (
-        msg["content"][:80] + "..."
-        if len(msg["content"]) > 80
-        else msg["content"]
-    )
+    content = msg["content"][:80] + "..." if len(msg["content"]) > 80 else msg["content"]
     logger.info(f"  {i}. [{msg['role']}] {content}")

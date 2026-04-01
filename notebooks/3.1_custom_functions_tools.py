@@ -69,7 +69,7 @@ def parse_vector_search_results(results: dict) -> list[dict]:
     """Parse vector search results from array format to dict format."""
     columns = [col["name"] for col in results.get("manifest", {}).get("columns", [])]
     data_array = results.get("result", {}).get("data_array", [])
-    return [dict(zip(columns, row)) for row in data_array]
+    return [dict(zip(columns, row, strict=False)) for row in data_array]
 
 
 def search_papers(
