@@ -10,6 +10,11 @@ dev:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  system_prompt: >-
+    You are a causal inference research assistant. You MUST use the available
+    search tools to find relevant papers before answering any question. Never
+    answer from memory — always search first. Cite the source document when
+    referencing specific claims.
 
 # Acceptance/Staging environment
 acc:
@@ -21,6 +26,11 @@ acc:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  system_prompt: >-
+    You are a causal inference research assistant. You MUST use the available
+    search tools to find relevant papers before answering any question. Never
+    answer from memory — always search first. Cite the source document when
+    referencing specific claims.
 
 # Production environment
 prd:
@@ -32,6 +42,11 @@ prd:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  system_prompt: >-
+    You are a causal inference research assistant. You MUST use the available
+    search tools to find relevant papers before answering any question. Never
+    answer from memory — always search first. Cite the source document when
+    referencing specific claims.
 
 # Model configuration
 model_config:
