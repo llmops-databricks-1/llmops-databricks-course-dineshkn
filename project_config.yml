@@ -10,6 +10,8 @@ dev:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  lakebase_project_id: null
+  experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available
     search tools to find relevant papers before answering any question. Never
@@ -26,6 +28,8 @@ acc:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  lakebase_project_id: null
+  experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available
     search tools to find relevant papers before answering any question. Never
@@ -42,6 +46,8 @@ prd:
   warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
+  lakebase_project_id: null
+  experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available
     search tools to find relevant papers before answering any question. Never

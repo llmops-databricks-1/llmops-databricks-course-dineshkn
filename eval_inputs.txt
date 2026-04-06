@@ -1,0 +1,10 @@
+What is the fundamental problem of causal inference?
+Explain the potential outcomes framework and its key assumptions.
+What is the difference between correlation and causation in the context of observational studies?
+How does instrumental variable estimation address endogeneity?
+What are the key assumptions required for difference-in-differences to produce valid causal estimates?
+Explain regression discontinuity design and when it can be used.
+What is propensity score matching and how does it reduce selection bias?
+How do randomized controlled trials establish causal effects?
+What is the role of the stable unit treatment value assumption (SUTVA)?
+Describe the backdoor criterion and how it guides covariate selection.
