@@ -151,9 +151,7 @@ class CausalInferenceAgent(ResponsesAgent):
         return []
 
     @mlflow.trace(span_type=SpanType.CHAIN, name="memory_save")
-    def save_memory(
-        self, session_id: str, messages: list[dict[str, Any]]
-    ) -> None:
+    def save_memory(self, session_id: str, messages: list[dict[str, Any]]) -> None:
         """Persist new messages to Lakebase for the given session."""
         if self.memory:
             self.memory.save_messages(session_id, messages)
@@ -227,9 +225,7 @@ class CausalInferenceAgent(ResponsesAgent):
                 ),
                 "model_version": os.getenv("MODEL_VERSION", "local"),
             },
-            metadata=(
-                {"mlflow.trace.session": session_id} if session_id else {}
-            ),
+            metadata=({"mlflow.trace.session": session_id} if session_id else {}),
             client_request_id=request_id,
         )
 
@@ -260,9 +256,7 @@ class CausalInferenceAgent(ResponsesAgent):
         request_id = custom.get("request_id")
 
         previous_messages = (
-            self.load_memory(session_id)
-            if session_id and self.memory
-            else []
+            self.load_memory(session_id) if session_id and self.memory else []
         )
 
         request_input = [i.model_dump() for i in request.input]
@@ -299,9 +293,7 @@ def log_register_agent(
     resources = [
         DatabricksServingEndpoint(endpoint_name=cfg.llm_endpoint),
         DatabricksVectorSearchIndex(
-            index_name=(
-                f"{cfg.catalog}.{cfg.schema}.causal_inference_chunks_index"
-            )
+            index_name=(f"{cfg.catalog}.{cfg.schema}.causal_inference_chunks_index")
         ),
         DatabricksServingEndpoint(endpoint_name=cfg.embedding_endpoint),
     ]

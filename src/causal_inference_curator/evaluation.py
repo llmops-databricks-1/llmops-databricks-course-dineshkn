@@ -67,8 +67,16 @@ def mentions_papers(outputs: list) -> bool:
     """Return True if the response references specific research papers or studies."""
     text = _extract_text(outputs).lower()
     keywords = [
-        "paper", "study", "research", "author", "published",
-        "journal", "et al", "findings", "experiment", "dataset",
+        "paper",
+        "study",
+        "research",
+        "author",
+        "published",
+        "journal",
+        "et al",
+        "findings",
+        "experiment",
+        "dataset",
     ]
     return any(kw in text for kw in keywords)
 
@@ -78,10 +86,22 @@ def uses_causal_terminology(outputs: list) -> bool:
     """Return True if the response uses domain-appropriate causal inference language."""
     text = _extract_text(outputs).lower()
     causal_terms = [
-        "causal", "counterfactual", "treatment", "control", "confounder",
-        "instrumental variable", "regression discontinuity", "difference-in-differences",
-        "propensity score", "randomized", "potential outcome", "ate", "att",
-        "selection bias", "endogeneity", "identification",
+        "causal",
+        "counterfactual",
+        "treatment",
+        "control",
+        "confounder",
+        "instrumental variable",
+        "regression discontinuity",
+        "difference-in-differences",
+        "propensity score",
+        "randomized",
+        "potential outcome",
+        "ate",
+        "att",
+        "selection bias",
+        "endogeneity",
+        "identification",
     ]
     return any(term in text for term in causal_terms)
 
@@ -127,11 +147,7 @@ def evaluate_agent(
     )
 
     with open(eval_inputs_path) as f:
-        eval_data = [
-            {"inputs": {"question": line.strip()}}
-            for line in f
-            if line.strip()
-        ]
+        eval_data = [{"inputs": {"question": line.strip()}} for line in f if line.strip()]
 
     def predict_fn(question: str) -> str:
         request = {"input": [{"role": "user", "content": question}]}
@@ -161,8 +177,4 @@ def create_eval_data_from_file(eval_inputs_path: str) -> list[dict]:
         List of dicts in the format expected by mlflow.genai.evaluate.
     """
     with open(eval_inputs_path) as f:
-        return [
-            {"inputs": {"question": line.strip()}}
-            for line in f
-            if line.strip()
-        ]
+        return [{"inputs": {"question": line.strip()}} for line in f if line.strip()]

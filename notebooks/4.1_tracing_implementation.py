@@ -105,7 +105,10 @@ def call_llm_stub(prompt: str) -> str:
 def search_papers_stub(query: str) -> list:
     """Simulate a vector search for causal inference papers."""
     return [
-        {"id": 1, "title": "Identification of Causal Effects Using Instrumental Variables"},
+        {
+            "id": 1,
+            "title": "Identification of Causal Effects Using Instrumental Variables",
+        },
         {"id": 2, "title": "Estimating Average Treatment Effects"},
     ]
 
@@ -137,7 +140,7 @@ def score_relevance(query: str, results: list) -> dict:
         span.set_inputs({"query": query, "num_results": len(results)})
 
         with mlflow.start_span("compute_scores") as step1:
-            scores = [0.95, 0.87, 0.72][:len(results)]
+            scores = [0.95, 0.87, 0.72][: len(results)]
             step1.set_outputs({"scores": scores})
 
         with mlflow.start_span("rank_results") as step2:
@@ -216,7 +219,8 @@ logger.info(f"Found {len(traces_df)} traces with git_sha={git_sha}")
 
 if len(traces_df) > 0:
     cols_to_show = [
-        c for c in ["request_id", "timestamp_ms", "status", "tags"]
+        c
+        for c in ["request_id", "timestamp_ms", "status", "tags"]
         if c in traces_df.columns
     ]
     display(traces_df[cols_to_show].head() if cols_to_show else traces_df.head())
@@ -258,7 +262,9 @@ def call_real_llm(prompt: str, model: str | None = None) -> str:
     return response.choices[0].message.content
 
 
-result = call_real_llm("What is the fundamental problem of causal inference in one sentence?")
+result = call_real_llm(
+    "What is the fundamental problem of causal inference in one sentence?"
+)
 logger.info(f"LLM Response: {result}")
 logger.info("✓ Real LLM call traced!")
 
@@ -328,10 +334,15 @@ logger.info(f"Recent Traces: {len(recent_traces_df)}")
 
 if len(recent_traces_df) > 0:
     simple_cols = [
-        c for c in recent_traces_df.columns
+        c
+        for c in recent_traces_df.columns
         if c not in ["request", "response", "spans", "inputs", "outputs"]
     ]
-    display(recent_traces_df[simple_cols].head(10) if simple_cols else recent_traces_df.head(10))
+    display(
+        recent_traces_df[simple_cols].head(10)
+        if simple_cols
+        else recent_traces_df.head(10)
+    )
 
 # COMMAND ----------
 

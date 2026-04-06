@@ -102,7 +102,9 @@ mlflow.set_experiment(cfg.project.experiment_name)
 logger.info("Guidelines loaded from causal_inference_curator.evaluation:")
 logger.info(f"  polite_tone_guideline  — {len(polite_tone_guideline.guidelines)} rules")
 logger.info(f"  scope_guideline        — {len(scope_guideline.guidelines)} rules")
-logger.info(f"  cites_sources_guideline — {len(cites_sources_guideline.guidelines)} rules")
+logger.info(
+    f"  cites_sources_guideline — {len(cites_sources_guideline.guidelines)} rules"
+)
 
 # COMMAND ----------
 

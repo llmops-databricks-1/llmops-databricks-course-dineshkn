@@ -31,13 +31,7 @@ from mlflow.models.resources import (
 
 from causal_inference_curator.agent import log_register_agent
 from causal_inference_curator.config import ProjectConfig
-from causal_inference_curator.evaluation import (
-    cites_sources_guideline,
-    evaluate_agent,
-    mentions_papers,
-    polite_tone_guideline,
-    word_count_check,
-)
+from causal_inference_curator.evaluation import evaluate_agent
 
 # COMMAND ----------
 
@@ -216,4 +210,6 @@ logger.info(f"Registered model: {cfg.catalog}.{cfg.schema}.causal_inference_agen
 logger.info("=" * 80)
 for v in versions:
     aliases = v.aliases if hasattr(v, "aliases") else []
-    logger.info(f"  Version {v.version} | status={v.status} | aliases={aliases} | run_id={v.run_id[:8]}...")
+    logger.info(
+        f"  Version {v.version} | status={v.status} | aliases={aliases} | run_id={v.run_id[:8]}..."
+    )
