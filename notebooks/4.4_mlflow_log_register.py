@@ -200,7 +200,6 @@ logger.info(f"Registered via helper — version: {registered_v2.version}")
 # MAGIC ## 8. Inspect Registered Model Versions
 
 # COMMAND ----------
-
 inspect_client = MlflowClient()
 versions = inspect_client.search_model_versions(
     f"name='{cfg.catalog}.{cfg.schema}.causal_inference_agent'"
