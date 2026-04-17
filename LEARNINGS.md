@@ -107,6 +107,62 @@
 
 ---
 
+## Week 4: MLflow Tracing & Evaluation
+
+### What We Built
+
+- **`src/causal_inference_curator/agent.py`** — `CausalInferenceAgent(ResponsesAgent)` with full MLflow tracing:
+  - `predict_stream()` decorated `@mlflow.trace(AGENT)` — root span
+  - `load_memory()` decorated `@mlflow.trace(RETRIEVER)` — Lakebase session load
+  - `call_and_run_tools()` decorated `@mlflow.trace(CHAIN)` — orchestration loop
+  - `call_llm()` uses `mlflow.start_span(LLM)` manually (streaming-compatible)
+  - `execute_tool()` decorated `@mlflow.trace(TOOL)` — vector search calls
+  - `save_memory()` decorated `@mlflow.trace(CHAIN)` — Lakebase session save
+  - `log_register_agent()` helper to log + register to Unity Catalog
+- **`src/causal_inference_curator/evaluation.py`** — Domain-specific scorers:
+  - `polite_tone_guideline` — LLM-as-judge, binary
+  - `scope_guideline` — stays on causal inference topics
+  - `cites_sources_guideline` — claims grounded in retrieved papers
+  - `word_count_check` — deterministic, < 400 words
+  - `mentions_papers` — deterministic, cites research
+  - `uses_causal_terminology` — deterministic, domain language check
+  - `evaluate_agent()` — convenience wrapper for full eval run
+- **`causal_inference_agent.py`** (repo root) — MLflow pyfunc entry-point used by `log_model(python_model=...)`
+- **`eval_inputs.txt`** (repo root) — 10 causal inference evaluation questions
+- **Notebooks 4.1–4.4**: tracing basics → traced agent → evaluation theory → log & register
+
+### Config Changes
+
+- Added `lakebase_project_id` field to `ProjectConfig` (optional, for future use)
+- Added `experiment_name` field to `ProjectConfig` (default: `/Shared/causal-inference-agent`)
+- Added `experiment_path` property as alias for `experiment_name`
+- Updated `project_config.yml` for all envs with `lakebase_project_id: null` and `experiment_name`
+
+### Key Differences from Reference
+
+- Reference `ArxivAgent` uses `lakebase_project_id` in `LakebaseMemory(project_id=...)` — our `LakebaseMemory` uses `host` + `instance_name` (kept our interface, agent constructor takes `lakebase_host` + `lakebase_instance_name`)
+- Reference `load_config()` returns `ProjectConfig` only; ours returns `Config` (with `.project`, `.model`, etc.) — notebooks use `cfg.project.llm_endpoint` etc.
+- Our evaluation scorers are causal-inference-specific: `uses_causal_terminology`, `cites_sources_guideline` instead of the reference's `hook_in_post_guideline`
+- Skipped `DatabricksGenieSpace` / `DatabricksSQLWarehouse` in resources (Genie not configured)
+
+### MLflow Registry URI Quirk (Local / Databricks Connect)
+
+- When running locally via Databricks Connect, `mlflow.register_model` tries to read `spark.mlflow.modelRegistryUri` via Spark GRPC first — this always fails with `CONFIG_NOT_AVAILABLE` noise in the logs but is harmless
+- The fix is to explicitly call `mlflow.set_registry_uri(f"databricks-uc://{profile}")` **before** any `register_model` call
+- Every notebook's setup block must include this, and any helper function that calls `register_model` internally must also set it
+- The GRPC error spam in the logs can be ignored — if the final output says "Registered model" or "Model logged", it worked
+
+### Notebook Runability
+
+- **4.1, 4.2, 4.3**: Run locally via Databricks Connect (VS Code extension). MLflow tracking URI is set to `databricks://{profile}` when not on Databricks runtime.
+- **4.4**: Must run on Databricks. `mlflow.pyfunc.log_model(python_model=...)` with a file path needs the Databricks runtime to resolve and upload the agent code.
+
+### Branch Strategy
+
+- `week4` branched off `week3` (same pattern as previous weeks)
+
+---
+
 ### Git / SSH
 
 - `~/.ssh/config` routes all `github.com` connections to the Adobe key (`id_ed25519_orgb`) via `IdentitiesOnly yes`. This breaks pushes/pulls for the personal llmops org.

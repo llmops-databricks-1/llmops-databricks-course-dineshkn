@@ -21,6 +21,13 @@ class ProjectConfig(BaseModel):
     genie_space_id: str | None = Field(
         None, description="Genie space ID for MCP integration"
     )
+    lakebase_project_id: str | None = Field(
+        None, description="Lakebase project ID for session memory"
+    )
+    experiment_name: str = Field(
+        default="/Shared/causal-inference-agent",
+        description="MLflow experiment name",
+    )
     system_prompt: str = Field(
         default=(
             "You are a helpful AI assistant that helps users understand "
@@ -69,6 +76,11 @@ class ProjectConfig(BaseModel):
     def full_volume_path(self) -> str:
         """Get fully qualified volume path."""
         return f"{self.catalog}.{self.schema}.{self.volume}"
+
+    @property
+    def experiment_path(self) -> str:
+        """Alias for experiment_name for backward compatibility."""
+        return self.experiment_name
 
 
 class ModelConfig(BaseModel):
