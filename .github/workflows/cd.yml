@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - week5
   workflow_dispatch:
 
 jobs:
