@@ -345,6 +345,7 @@ def log_register_agent(
         model_uri=model_info.model_uri,
         name=model_name,
         tags={"git_sha": git_sha, "run_id": run_id},
+        env_pack="databricks_model_serving",
     )
     logger.info(f"Registered version: {registered_model.version}")
 

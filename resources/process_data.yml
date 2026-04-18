@@ -5,7 +5,7 @@ resources:
       schedule:
         quartz_cron_expression: "0 0 6 * * ?"
         timezone_id: "Europe/Amsterdam"
-        pause_status: PAUSED
+        pause_status: ${var.schedule_pause_status}
       tags:
         project_name: "causal-inference-curator"
 
@@ -14,7 +14,7 @@ resources:
           spec:
             client: "1"
             dependencies:
-              - /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
+              - ${workspace.root_path}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
 
       tasks:
         - task_key: preprocessing

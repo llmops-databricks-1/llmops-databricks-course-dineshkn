@@ -61,6 +61,7 @@ target/
 
 # MLflow local run artifacts
 mlruns/
+mlflow.db
 
 # pyenv
 .python-version

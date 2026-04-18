@@ -92,6 +92,12 @@ ignore = [
     "F821",   # undefined name (e.g. `display` is a Databricks magic)
     "ANN",    # type annotations not required in notebook functions
 ]
+"resources/deployment_scripts/*.py" = [
+    "E402",   # module-level imports not at top (expected in notebook cells)
+    "E501",   # line too long
+    "F821",   # undefined name (e.g. `dbutils` is injected by Databricks runtime)
+    "ANN",    # type annotations not required in deployment scripts
+]
 
 [tool.ruff.format]
 indent-style = "space"
