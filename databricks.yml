@@ -3,6 +3,7 @@ bundle:
 
 include:
   - resources/*.yml
+  - resources/dashboards/*.yml
 
 variables:
   git_sha:
@@ -14,6 +15,9 @@ variables:
   schedule_pause_status:
     description: "Whether scheduled jobs are paused"
     default: PAUSED
+  warehouse_id:
+    description: "SQL warehouse ID for the monitoring dashboard"
+    default: "96e26e80fcd91931"
 
 artifacts:
   default:

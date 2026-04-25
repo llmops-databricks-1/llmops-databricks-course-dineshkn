@@ -7,7 +7,7 @@ dev:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: not_used
+  warehouse_id: 96e26e80fcd91931
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null
@@ -26,7 +26,7 @@ acc:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: not_used
+  warehouse_id: 96e26e80fcd91931
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null
@@ -45,7 +45,7 @@ prd:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: not_used
+  warehouse_id: 96e26e80fcd91931
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null

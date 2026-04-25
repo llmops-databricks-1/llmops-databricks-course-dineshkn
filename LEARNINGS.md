@@ -163,6 +163,62 @@
 
 ---
 
+## Week 6: Trace Propagation, Evaluation & Dashboard
+
+### What We Built
+
+- **`notebooks/6.1_propagate_traces.py`** — sends 30 causal inference queries to the live endpoint to generate MLflow traces
+- **`resources/deployment_scripts/update_traces_aggregated.py`** — fetches unevaluated traces, runs `word_count_check` on all, samples 10% for `polite_tone` + `cites_sources` LLM-judge eval, creates/refreshes `causal_inference_traces_aggregated` SQL view
+- **`resources/update_traces_aggregated.yml`** — DAB job for the pipeline above
+- **`resources/dashboards/agent_monitoring_dashboard.yml` + `.lvdash.json`** — Lakeview dashboard reading from the aggregated view; shows latency, token usage, quality pass rates over time
+
+### Traces Table Name
+
+- Inference table: `mlops_dev.dineshka.trace_logs_2065492370656966` (the suffix is the MLflow experiment ID)
+- Found by listing `SHOW TABLES IN mlops_dev.dineshka` after running the endpoint
+
+### Token Acquisition (Local)
+
+- `workspace.tokens.create()` is blocked in this workspace — use `workspace.config.authenticate()["Authorization"].split(" ")[1]` instead
+- This works both locally (VS Code metadata-service) and on Databricks runtime
+
+### LLM-Judge Feedback: None Guard
+
+- `mlflow.genai.evaluate` with `Guidelines` scorers can return `None` for `feedback.value` if the judge can't assess the response
+- `mlflow.log_feedback(value=None)` raises `MlflowException` — guard with `if val is None: continue`
+
+### Dashboard deploy: pre-create `resources/` workspace dir
+
+- Terraform provider v1.75.0 (`databricks_dashboard`) requires the parent workspace path to exist before creating the dashboard
+- `bundle deploy` does **not** auto-create it — pre-create manually once per fresh target:
+  ```python
+  from databricks.sdk import WorkspaceClient
+  w = WorkspaceClient()
+  w.workspace.mkdirs('/Workspace/Users/<user>/.bundle/<bundle>/<target>/resources')
+  ```
+- After that, subsequent `bundle deploy` runs work without this step
+
+### Dashboard `file_path` Gotcha
+
+- `file_path` in the dashboard YAML is relative to the bundle root, **not** to the YAML file location
+- Use `../dashboards/agent_monitoring_dashboard.lvdash.json` (relative from `resources/` to sibling `resources/dashboards/`)
+
+### Warehouse ID
+
+- Dashboard needs a SQL warehouse: `7077f4cb0e616c62` (shared course warehouse, same workspace)
+- Set in both `project_config.yml` (all envs) and as `databricks.yml` variable default
+
+### Running Locally
+
+- `6.1_propagate_traces.py`: runs directly with `uv run python` + `DATABRICKS_CONFIG_PROFILE`
+- `update_traces_aggregated.py`: source `.databricks/.databricks.env` first (sets `DATABRICKS_SERVERLESS_COMPUTE_ID=auto`), then run from `resources/deployment_scripts/` so `../../project_config.yml` resolves correctly
+
+### Branch Strategy
+
+- `week6` branched from `main` after week 5 merged
+
+---
+
 ### Git / SSH
 
 - `~/.ssh/config` routes all `github.com` connections to the Adobe key (`id_ed25519_orgb`) via `IdentitiesOnly yes`. This breaks pushes/pulls for the personal llmops org.
