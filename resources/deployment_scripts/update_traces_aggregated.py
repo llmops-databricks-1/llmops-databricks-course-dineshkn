@@ -32,7 +32,9 @@ schema = cfg.schema
 # The suffix (e.g. trace_logs_1234567890) can be found in the workspace under the
 # experiment's linked inference table, or via:
 #   databricks serving-endpoints get causal-inference-agent-endpoint-dev | grep inference_table
-traces_table = get_widget("traces_table", f"{catalog}.{schema}.trace_logs_2065492370656966")
+traces_table = get_widget(
+    "traces_table", f"{catalog}.{schema}.trace_logs_2065492370656966"
+)
 
 # Target view: aggregated metrics + quality scores per trace
 aggregated_view = f"{catalog}.{schema}.causal_inference_traces_aggregated"
