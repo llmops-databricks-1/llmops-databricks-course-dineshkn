@@ -7,10 +7,11 @@ dev:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
+  warehouse_id: not_used
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null
+  usage_policy_id: null
   experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available
@@ -25,10 +26,11 @@ acc:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
+  warehouse_id: not_used
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null
+  usage_policy_id: null
   experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available
@@ -43,10 +45,11 @@ prd:
   volume: causal_inference_pdfs
   llm_endpoint: databricks-meta-llama-3-3-70b-instruct
   embedding_endpoint: databricks-gte-large-en
-  warehouse_id: REPLACE_WITH_YOUR_WAREHOUSE_ID
+  warehouse_id: not_used
   vector_search_endpoint: llmops_course_vs_endpoint
   genie_space_id: null
   lakebase_project_id: null
+  usage_policy_id: null
   experiment_name: /Shared/causal-inference-agent
   system_prompt: >-
     You are a causal inference research assistant. You MUST use the available

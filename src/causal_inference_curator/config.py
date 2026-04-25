@@ -24,6 +24,9 @@ class ProjectConfig(BaseModel):
     lakebase_project_id: str | None = Field(
         None, description="Lakebase project ID for session memory"
     )
+    usage_policy_id: str | None = Field(
+        None, description="Databricks usage policy ID for agent deployment"
+    )
     experiment_name: str = Field(
         default="/Shared/causal-inference-agent",
         description="MLflow experiment name",
