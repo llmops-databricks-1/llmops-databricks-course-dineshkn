@@ -1,0 +1,22 @@
+resources:
+  jobs:
+    update-traces-aggregated:
+      name: causal-inference-agent-update-traces-aggregated
+      tags:
+        project_name: "causal-inference-curator"
+        environment: ${bundle.target}
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - ${workspace.root_path}/artifacts/.internal/causal_inference_curator-0.0.1-py3-none-any.whl
+
+      tasks:
+        - task_key: update_traces_aggregated
+          environment_key: default
+          notebook_task:
+            notebook_path: deployment_scripts/update_traces_aggregated.py
+            base_parameters:
+              env: ${bundle.target}
+              traces_table: "mlops_dev.dineshka.trace_logs_2065492370656966"
